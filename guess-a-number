@@ -1,0 +1,31 @@
+import random
+
+print("Welcome to Guess a Number!")
+winning_nr = random.randint(1, 10)
+turn_limit = 5
+turns = 0
+guesses = []
+
+while turns != turn_limit:
+    inp = input("Guess a number from 1 to 10: ")
+    try:
+        guess = int(inp)
+    except:
+        print("Invalid input")
+        continue
+    if not 0 < guess <= 10:
+        print("Number not between 1 and 10")
+        continue
+    elif guess in guesses:
+        print("You already guessed that")
+
+    elif guess == winning_nr:
+        print("Congratulations you won!")
+        exit()
+    elif turns == turn_limit:
+        print("Game over - the winning number was: %i" % winning_nr)
+        exit()
+    else:
+        print("Try again!")
+        guesses.append(guess)
+        turns += 1
