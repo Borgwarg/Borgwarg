@@ -1,0 +1,67 @@
+import random
+
+print("Welcome to hangman")
+words = ['stone', 'techno', 'festival', 'germany', 'arte']
+word = random.choice(words)
+guesses = []
+word_lst = []
+hangman_cnt = 0
+hangman = {}
+hangman[1] = """
+             ___|___"""
+hangman[2] = """
+                |
+                |
+                |
+                |
+             ___|___"""
+hangman[3]= """
+               ____,
+               |   |
+                   |
+                   |
+                   |
+                ___|___"""
+hangman[4]= """
+               ____,
+               |   |
+              \o/  |
+                   |
+                   |
+                ___|___"""
+hangman[5] = """
+               ____,
+               |   |
+              \o/  |
+               |   |
+              / \  |
+                ___|___"""
+for letter in word:
+    guesses.append('_')
+    word_lst.append(letter)
+
+while True:
+    guess = input("\nGuess a letter: ")
+
+
+    def correct_guess(gs, wrd):
+        for char in wrd:
+            if char == gs:
+                return True
+    if correct_guess(guess, word):
+        guesses[word_lst.index(guess)] = guess
+        for item in guesses:
+            print(item, end=" ")
+    else:
+        print("Incorrect guess")
+        hangman_cnt += 1
+        print(hangman[hangman_cnt])
+
+    if guesses == word_lst:
+        print("You won!")
+        exit()
+    elif hangman_cnt == 5:
+        print("Game over")
+        exit()
+
+
