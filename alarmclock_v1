@@ -1,0 +1,46 @@
+from datetime import datetime
+import string
+from playsound import playsound
+
+# checks if user input is a valid time
+while True:
+    time_data = input("What time would you like to wake up? (format: hour:min:sec) ")
+    if len(time_data) != 8:
+        print("Wrong input")
+    elif time_data[2] != ':' or time_data[5] != ':':
+        print("Wrong input")
+    elif (time_data[0] not in string.digits or time_data[1] not in string.digits or
+            time_data[3] not in string.digits or time_data[4] not in string.digits or
+            time_data[6] not in string.digits or time_data[7] not in string.digits):
+        print("Wrong input")
+    elif int(time_data[0:2]) > 23 or int(time_data[3:5]) > 59 or int(time_data[6:8]) > 59:
+        print("Wrong input")
+    else:
+        break
+usr_hr = time_data[0:2]
+usr_min = time_data[3:5]
+usr_sec = time_data[6:8]
+
+# loops through current time while alarm time is not reached
+while True:
+    now = datetime.now()
+
+    clock_hr = now.strftime("%H")
+    clock_min = now.strftime("%M")
+    clock_sec = now.strftime("%S")
+
+    if usr_hr == clock_hr:
+        if usr_min == clock_min:
+            if usr_sec == clock_sec:
+                print("Wake up!")
+                playsound('/Users/joscha/Music/Music/Media/Music/Unknown Artist/Unknown Album/Alarm.wav')
+                hit_snooze = input("Snooze? y/n ")
+                if hit_snooze == 'y':
+                    usr_sec = int(usr_sec)
+                    usr_sec += 15
+                    usr_sec = str(usr_sec)
+                    continue
+                else:
+                    break
+    else:
+        continue
